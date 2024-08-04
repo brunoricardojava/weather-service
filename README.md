@@ -21,6 +21,7 @@ Project developed with the intention of collect weather data.
     ```bash
     git clone https://github.com/brunoricardojava/weather-service.git
     cd drink_water
+    docker compose build
     ```
 
 ## Config
