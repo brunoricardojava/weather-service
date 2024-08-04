@@ -25,7 +25,7 @@ Project developed with the intention of collect weather data.
 
 ## Config
 
-1. Open .env_development and config the project, the default values will run the project.
+1. Open the file in project ".env_development" and config the project, the default values will run the project.
 
 ## Running
 
