@@ -16,11 +16,11 @@ class OpenWeatherAdpter:
 
     def __init__(self) -> None:
         if not hasattr(self, 'initialized'):
-            self.base_url = settings.OPEN_WEATHER_BASE_URL
-            self.api_key = settings.API_KEY
+            self.base_url = settings.ENV_CONFIG.get("OPEN_WEATHER_BASE_URL")
+            self.api_key = settings.ENV_CONFIG.get("API_KEY")
             self.units = "metric"
             self.client = httpx.AsyncClient()
-            self.limiter = AsyncLimiter(max_rate=settings.MAX_RATE, time_period=settings.TIME_PERIOD)
+            self.limiter = AsyncLimiter(max_rate=settings.ENV_CONFIG.get("MAX_RATE"), time_period=settings.ENV_CONFIG.get("TIME_PERIOD"))
             self.initialized = True
 
     async def execute(self, city_id) -> dict:

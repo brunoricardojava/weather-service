@@ -45,8 +45,8 @@ target-version = ["py311"]
 exclude = '''
 /(
     \.venv
-    | core
-    | drink_water/migrations
+    | config
+    | weather/migrations
 )/
 '''
 
