@@ -24,7 +24,7 @@ pytest-django = "^4.8.0"
 coverage = "^7.6.1"
 
 [tool.pytest.ini_options]
-DJANGO_SETTINGS_MODULE = "core.settings"
+DJANGO_SETTINGS_MODULE = "config.settings"
 python_files = [
     "test_*.py",
     "*_test.py"

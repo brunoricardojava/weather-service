@@ -1,0 +1,18 @@
+services:
+
+  web:
+    container_name: weather-service-web
+    restart: always
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    env_file:
+      - .env_development
+    ports:
+      - "5001:5001"
+    volumes:
+      - '.:/app'
+    # command: gunicorn config.wsgi:application --timeout 0 --bind 0.0.0.0:5001 --log-level=INFO --reload
+    command: poetry run python manage.py runserver 0.0.0.0:5001
+    stdin_open: true
+    tty: true
