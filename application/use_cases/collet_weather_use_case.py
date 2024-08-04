@@ -12,7 +12,7 @@ from application.adapters import OpenWeatherAdpter
 
 class CollectWeatherUseCase:
 
-    def __init__(self, weather_request: WeatherRequest, weather_consumer = OpenWeatherAdpter()) -> None:
+    def __init__(self, weather_request: WeatherRequest, weather_consumer=OpenWeatherAdpter()) -> None:
         self.weather_request = weather_request
         self.weather_consumer = weather_consumer
 
@@ -35,7 +35,7 @@ class CollectWeatherUseCase:
         data_to_storage = {
             "city_id": data.get("id"),
             "temperature": data.get("main").get("temp"),
-            "humidity": data.get("main").get("humidity")
+            "humidity": data.get("main").get("humidity"),
         }
         await sync_to_async(WeatherInfo.objects.create)(
             weather_request=self.weather_request,

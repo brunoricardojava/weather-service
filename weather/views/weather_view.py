@@ -31,7 +31,7 @@ class WeatherView(APIView):
             serializer = GetWeatherRequestSerializer(data=data)
             if serializer.is_valid():
                 count_weather_infos = WeatherInfo.objects.filter(weather_request__request_id=request_id).count()
-                total_percente = (count_weather_infos*100)/len(CITY_ID_LIST)
+                total_percente = (count_weather_infos * 100) / len(CITY_ID_LIST)
                 return Response({"Total Percent": int(total_percente)}, status=status.HTTP_200_OK)
             else:
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
