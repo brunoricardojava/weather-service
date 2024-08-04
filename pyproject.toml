@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "weather-service"
+version = "0.1.0"
+description = "A weather service consumption."
+authors = ["Bruno R. Scherer <brunoricardojava@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+django = "~4.2"
+djangorestframework = "~3.15"
+pydantic = "~2.8"
+httpx = "~0.27.0"
+aiolimiter = "~1.1.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
