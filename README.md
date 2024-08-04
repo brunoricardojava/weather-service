@@ -22,6 +22,10 @@ Project developed with the intention of collect weather data.
     cd drink_water
     ```
 
+## Config
+
+1. Open .env_development and config the project, the default values will run the project.
+
 ## Running
 
 1. Start the application container
