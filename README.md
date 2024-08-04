@@ -6,6 +6,7 @@ Project developed with the intention of collect weather data.
 
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
+- [Config](#config)
 - [Running](#running)
 - [Testing](#testing)
 
