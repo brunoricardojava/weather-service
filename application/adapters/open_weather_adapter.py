@@ -36,7 +36,7 @@ class OpenWeatherAdpter:
             while True:
                 try:
                     response = await self.client.get(url=self.base_url, params=params)
-                except:
+                except Exception:
                     print("Sleeping for 5 seconds")
                     await asyncio.sleep(5)
                 else:
