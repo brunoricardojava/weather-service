@@ -1,4 +1,4 @@
-from .collet_weather_use_case import ColletWeatherUseCase
+from .collet_weather_use_case import CollectWeatherUseCase
 
 
-__all__ = ["ColletWeatherUseCase"]
+__all__ = ["CollectWeatherUseCase"]

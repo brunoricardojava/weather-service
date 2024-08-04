@@ -10,7 +10,7 @@ from weather.models import WeatherInfo, WeatherRequest
 from application.adapters import OpenWeatherAdpter
 
 
-class ColletWeatherUseCase:
+class CollectWeatherUseCase:
 
     def __init__(self, weather_request: WeatherRequest, weather_consumer = OpenWeatherAdpter()) -> None:
         self.weather_request = weather_request
@@ -20,26 +20,25 @@ class ColletWeatherUseCase:
         asyncio.run(self._process())
 
     async def _process(self):
-        responses = await self._fetch_data()
-        await self._process_responses(responses)
-
-    async def _fetch_data(self):
         tasks = []
-        for city_id in CITY_ID_LIST[:5]:
-            tasks.append(self.weather_consumer.execute(city_id))
-        responses = await asyncio.gather(*tasks)
-        return responses
+        for city_id in CITY_ID_LIST:
+            task = asyncio.create_task(self._fetch_and_process(city_id))
+            tasks.append(task)
+        await asyncio.gather(*tasks)
 
-    async def _process_responses(self, responses: list[Response]):
-        for response in responses:
-            data = response.json()
-            data_to_storage = {
-                "city_id": data.get("id"),
-                "temperature": data.get("main").get("temp"),
-                "humidity": data.get("main").get("humidity")
-            }
-            await sync_to_async(WeatherInfo.objects.create)(
-                weather_request=self.weather_request,
-                city_id=data.get("id"),
-                weather_data=json.dumps(data_to_storage),
-            )
+    async def _fetch_and_process(self, city_id):
+        response = await self.weather_consumer.execute(city_id)
+        await self._process_response(response)
+
+    async def _process_response(self, response: Response):
+        data = response.json()
+        data_to_storage = {
+            "city_id": data.get("id"),
+            "temperature": data.get("main").get("temp"),
+            "humidity": data.get("main").get("humidity")
+        }
+        await sync_to_async(WeatherInfo.objects.create)(
+            weather_request=self.weather_request,
+            city_id=data.get("id"),
+            weather_data=json.dumps(data_to_storage),
+        )

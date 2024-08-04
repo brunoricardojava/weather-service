@@ -1,13 +1,27 @@
 import httpx
+import asyncio
 from aiolimiter import AsyncLimiter
 
+from django.conf import settings
+
+
 class OpenWeatherAdpter:
+
+    _instance = None
+
+    def __new__(cls, *args, **kwargs):
+        if cls._instance is None:
+            cls._instance = super(OpenWeatherAdpter, cls).__new__(cls, *args, **kwargs)
+        return cls._instance
+
     def __init__(self) -> None:
-        self.base_url = "https://api.openweathermap.org/data/2.5/weather"
-        self.api_key = "0ebd639c1938fcc6c839718735b6dc86"
-        self.units = "metric"
-        self.client = httpx.AsyncClient()
-        self.limiter = AsyncLimiter(max_rate=60, time_period=1)
+        if not hasattr(self, 'initialized'):
+            self.base_url = settings.OPEN_WEATHER_BASE_URL
+            self.api_key = settings.API_KEY
+            self.units = "metric"
+            self.client = httpx.AsyncClient()
+            self.limiter = AsyncLimiter(max_rate=settings.MAX_RATE, time_period=settings.TIME_PERIOD)
+            self.initialized = True
 
     async def execute(self, city_id) -> dict:
         return await self.fetch_weather(city_id)
@@ -19,5 +33,11 @@ class OpenWeatherAdpter:
             "units": self.units
         }
         async with self.limiter:
-            response = await self.client.get(url=self.base_url, params=params)
-            return response
+            while True:
+                try:
+                    response = await self.client.get(url=self.base_url, params=params)
+                except:
+                    print("Sleeping for 5 seconds")
+                    await asyncio.sleep(5)
+                else:
+                    return response
