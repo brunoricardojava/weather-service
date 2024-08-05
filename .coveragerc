@@ -1,0 +1,16 @@
+[report]
+exclude_lines =
+    pragma: no cover
+    if __name__ == .__main__.:
+    if settings.DEBUG
+
+[run]
+source = 
+    application
+    weather
+omit =
+    config/*
+    *__init__.py
+    weather/migrations/*
+    manage.py
+    tests/*

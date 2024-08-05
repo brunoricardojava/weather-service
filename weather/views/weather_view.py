@@ -22,7 +22,10 @@ class WeatherView(APIView):
             else:
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception:
-            weather_request.delete()
+            try:
+                weather_request.delete()
+            except Exception:
+                pass
             return Response({}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def get(self, request: Request, request_id: int) -> Response:
