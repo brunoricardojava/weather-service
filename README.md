@@ -39,7 +39,9 @@ Project developed with the intention of collect weather data.
 The application will be available at [http://0.0.0.0:5001/](http://0.0.0.0:5001/).
 
 Endpoints:
+
   [POST] /api/v1/weather/<unique_user_id>
+  
   [GET]  /api/v1/weather/<unique_user_id>
 
 ## Testing
